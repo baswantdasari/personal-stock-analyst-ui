@@ -4,30 +4,27 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-
-function formatName(user) {
-  return user.firstName + ' ' + user.lastName;
+class PersonalStock extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {stockValue:null}
+  }
+  componentDidMount(){
+    fetch("http://localhost:8080/stock/api?stock=AAPL").then(result=>{
+      this.setState({stockValue:result});
+    })
+  }
+  render(){
+    return(
+      <div><label>The Stock Value is <b>{this.state.stockValue}</b></label></div>
+    )
+  }
 }
 
-const user = {
-  firstName: 'Test',
-  lastName: 'Last'
-};
+const element = <PersonalStock></PersonalStock>;
 
-const element = (
-  <div>
-    <h1>
-      Hello, {formatName(user)}
-    </h1>
-    <h2>Good to see you</h2>
-  </div>
+ReactDOM.render(element,document.getElementById("root"));
 
-);
-
-ReactDOM.render(
-  element,
-  document.getElementById('root')
-);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
