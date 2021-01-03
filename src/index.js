@@ -1,32 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-class PersonalStock extends React.Component{
-  constructor(props){
+class Toggle extends React.Component {
+  constructor(props) {
     super(props);
-    this.state = {stockValue:null}
+    this.state = {isToggleOn: true};
+
+    // This binding is necessary to make `this` work in the callback
+    this.handleClick = this.handleClick.bind(this);
   }
-  componentDidMount(){
-    fetch("http://localhost:8080/stock/api?stock=AAPL").then(result=>{
-      this.setState({stockValue:result});
-    })
+
+  handleClick() {
+    this.setState(state => ({
+      isToggleOn: !state.isToggleOn
+    }));
   }
-  render(){
-    return(
-      <div><label>The Stock Value is <b>{this.state.stockValue}</b></label></div>
-    )
+
+  render() {
+    return (
+      <button onClick={this.handleClick}>
+        {this.state.isToggleOn ? 'ON' : 'OFF'}
+      </button>
+    );
   }
 }
 
-const element = <PersonalStock></PersonalStock>;
+ReactDOM.render(
+  <Toggle />,
+  document.getElementById('root')
+);
 
-ReactDOM.render(element,document.getElementById("root"));
 
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
