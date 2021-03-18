@@ -1,35 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import ReactDom from 'react-dom';
+import App from './App';
 
-class Toggle extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {isToggleOn: true};
+const title = 'React with webpack and Babel and hot swap';
 
-    // This binding is necessary to make `this` work in the callback
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    this.setState(state => ({
-      isToggleOn: !state.isToggleOn
-    }));
-  }
-
-  render() {
-    return (
-      <button onClick={this.handleClick}>
-        {this.state.isToggleOn ? 'ON' : 'OFF'}
-      </button>
+ReactDom.render(
+    <App title={title}/>,
+    document.getElementById('app')
     );
-  }
-}
-
-ReactDOM.render(
-  <Toggle />,
-  document.getElementById('root')
-);
-
-
-
+    
+module.hot.accept();
