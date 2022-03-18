@@ -1,6 +1,6 @@
-const webpack = require('webpack');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
- 
+
 module.exports = {
   entry: path.resolve(__dirname, './src/index.js'),
   module: {
@@ -8,20 +8,24 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader',"eslint-loader"]
+        use: ['babel-loader']
       }
     ]
   },
   resolve: {
-    extensions: ['*', '.js','.jsx'],
+    extensions: ['*', '.js', '.jsx'],
   },
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js',
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: path.resolve(__dirname, 'index.html'),
+      filename: 'index.html'
+    })
+  ],
   devServer: {
-    contentBase: path.resolve(__dirname, './dist'),
-    hot:true,
+    hot: true,
   },
 };

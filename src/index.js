@@ -6,7 +6,7 @@ const title = 'React with webpack and Babel and hot swap';
 
 ReactDom.render(
     <App title={title}/>,
-    document.getElementById('app')
+    document.getElementById('root')
     );
     
 module.hot.accept();
