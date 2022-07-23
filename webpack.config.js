@@ -1,8 +1,17 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: path.resolve(__dirname, './src/index.js'),
+
+  entry: {
+    app: path.resolve(`${__dirname}/src/app.js`)
+  },
+
+  devtool: 'eval-cheap-module-source-map',
+  devServer: {
+    hot: true,
+  },
+
   module: {
     rules: [
       {
@@ -12,20 +21,20 @@ module.exports = {
       }
     ]
   },
-  resolve: {
-    extensions: ['*', '.js', '.jsx'],
-  },
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js',
-  },
+
   plugins: [
-    new HtmlWebPackPlugin({
-      template: path.resolve(__dirname, 'index.html'),
-      filename: 'index.html'
+    new CopyWebpackPlugin({
+      patterns:[
+        {
+          from:'./src/index.html',
+          to:``
+        }
+      ]
     })
   ],
-  devServer: {
-    hot: true,
-  },
+
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: `[name].js`,
+  }
 };
