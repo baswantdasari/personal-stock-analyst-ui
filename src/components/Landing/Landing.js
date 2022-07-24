@@ -1,23 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { authenticate } from '../../actions/UserAction';
+import { useNavigate } from 'react-router-dom'
 
 const Landing = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const submit = () => {
+        dispatch(authenticate(username,password));
+        navigate('/home');
+    }
+
     return (
         <div>
             <h3>Sign In</h3>
             <div className="mb-3">
                 <label>Email address</label>
                 <input
+                    id='email'
                     type="email"
                     className="form-control"
                     placeholder="Enter email"
+                    onChange={(e) => setUsername(e.target.value)}
                 />
             </div>
             <div className="mb-3">
                 <label>Password</label>
                 <input
+                    id='password'
                     type="password"
                     className="form-control"
                     placeholder="Enter password"
+                    onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
             <div className="mb-3">
@@ -33,7 +51,7 @@ const Landing = () => {
                 </div>
             </div>
             <div className="d-grid">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary" onClick={submit}>
                     Submit
                 </button>
             </div>
