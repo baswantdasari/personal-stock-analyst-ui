@@ -26,8 +26,12 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns:[
         {
+          from:'./node_modules/bootstrap/dist/css',
+          to:`ui`
+        },
+        {
           from:'./src/index.html',
-          to:``
+          to:`ui`
         }
       ]
     })
